@@ -1,11 +1,10 @@
-#!/usr/bin/python3
-""" AirBnB clone - The console"""
 from datetime import datetime
 import uuid
 
 
 class BaseModel:
     """Defines the attributes and methods for all models."""
+
     def __init__(self, *args, **kwargs):
         """Initializes a new instance."""
         if kwargs:
