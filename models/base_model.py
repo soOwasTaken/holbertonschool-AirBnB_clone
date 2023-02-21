@@ -6,7 +6,6 @@ from datetime import datetime
 
 class BaseModel:
     """Defines the attributes and methods"""
-
     def __init__(self):
         """Initializes a new instance"""
         self.id = str(uuid.uuid4())
