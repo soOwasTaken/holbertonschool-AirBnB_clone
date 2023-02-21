@@ -12,6 +12,14 @@ class BaseModel:
                 if key == 'created_at' or key == 'updated_at':
                     value = datetime.strptime(value, '%Y-%m-%dT%H:%M:%S.%f')
                 if key != '__class__':
+    """Defines the attributes and methods"""
+    def __init__(self, *args, **kwargs):
+        """Initializes a new instance"""
+        if kwargs:
+            for key, value in kwargs.items():
+                if key == 'created_at' or key == 'update_at':
+                    value = datetime.strptime(value, '%Y-%m-%dT%H:%M:%S.%f')
+                elif key != '__class__':
                     setattr(self, key, value)
         else:
             self.id = str(uuid.uuid4())
