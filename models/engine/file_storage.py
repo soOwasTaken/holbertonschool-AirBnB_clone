@@ -1,5 +1,7 @@
 import json
 from models.base_model import BaseModel
+from models.user import User
+
 
 class FileStorage:
     __file_path = "file.json"
@@ -29,5 +31,5 @@ class FileStorage:
                     obj_dict['__class__'] = class_name
                     obj = eval(class_name)(**obj_dict)
                     self.__objects[key] = obj
-        except:
+        except FileNotFoundError:
             pass
