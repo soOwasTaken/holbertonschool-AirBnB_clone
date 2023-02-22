@@ -96,66 +96,13 @@ class HBNBCommand(cmd.Cmd):
             print([str(obj) for obj in objects.values()
                    if type(obj).__name__ == class_name])
 
-    def do_show(self, arg):
-        """Prints the string representation of an instance based on the
-        class name and id.
-        """
-        args = shlex.split(arg)
-        if not args:
-            print("** class name missing **")
-            return
-        class_name = args[0]
-        if class_name not in HBNBCommand.classes:
-            print("** class doesn't exist **")
-            return
-        if len(args) < 2:
-            print("** instance id missing **")
-            return
-        instance_id = args[1]
-        key = class_name + "." + instance_id
-        if key not in models.storage.all():
-            print("** no instance found **")
-            return
-        print(models.storage.all()[key])
-
-    def do_destroy(self, arg):
-        """Deletes an instance based on the class name and id"""
-        args = shlex.split(arg)
-        if not args:
-            print("** class name missing **")
-            return
-        class_name = args[0]
-        if class_name not in HBNBCommand.classes:
-            print("** class doesn't exist **")
-            return
-        if len(args) < 2:
-            print("** instance id missing **")
-            return
-        instance_id = args[1]
-        key = class_name + "." + instance_id
-        if key not in models.storage.all():
-            print("** no instance found **")
-            return
-        del models.storage.all()[key]
-        models.storage.save()
-
-    def do_all(self, arg):
-        """Prints all string representation of all instances"""
-        args = shlex.split(arg)
-        objects = models.storage.all()
-        if not args:
-            print([str(obj) for obj in objects.values()])
-        else:
-            if args[0] not in HBNBCommand.classes:
-                print("** class doesn't exist **")
-                return
-            class_name = args[0]
-            print([str(obj) for obj in objects.values()
-                   if type(obj).__name__ == class_name])
 
     def do_update(self, line):
         """Updates an instance based on the class name and id."""
         arg_list = shlex.split(line)
+        if len(arg_list) < 1:
+            print("Class name is missing")
+            return
         class_name = arg_list[0]
         if not class_name:
             print("** class name missing **")
