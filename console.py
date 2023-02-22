@@ -101,7 +101,7 @@ class HBNBCommand(cmd.Cmd):
         """Updates an instance based on the class name and id."""
         arg_list = shlex.split(line)
         if len(arg_list) < 1:
-            print("Class name is missing")
+            print("Class name missing")
             return
         class_name = arg_list[0]
         if not class_name:
