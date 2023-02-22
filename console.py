@@ -3,14 +3,13 @@
 import cmd
 import shlex
 import models
-from models.user import User
 
 
 class HBNBCommand(cmd.Cmd):
     """Class for HBNB console"""
 
     prompt = '(hbnb) '
-    classes = ['BaseModel', 'User']
+    classes = ['BaseModel']
 
     def do_quit(self, arg):
         """Quit command to exit the program"""
