@@ -26,7 +26,7 @@ class BaseModel:
         return "[{}] ({}) {}".format(class_name, self.id, self.__dict__)
 
     def save(self):
-        """Updates the time of the last instance update and saves to storage."""
+        """Updates the time of the last instance update and saves to storage"""
         self.updated_at = datetime.now()
         from models import storage
         storage.save()

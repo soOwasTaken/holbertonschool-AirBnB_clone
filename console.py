@@ -9,7 +9,8 @@ class HBNBCommand(cmd.Cmd):
     """Class for HBNB console"""
 
     prompt = '(hbnb) '
-    classes = ['BaseModel']
+    classes = ['BaseModel', 'User', 'City',
+               'Place', 'Amenity', 'Review', 'State']
 
     def do_quit(self, arg):
         """Quit command to exit the program"""
@@ -25,8 +26,7 @@ class HBNBCommand(cmd.Cmd):
         pass
 
     def do_create(self, arg):
-        """Creates a new instance of BaseModel, saves it (to the JSON file)
-        and prints the id.
+        """Creates a new instance based on the class name and id.
         """
         args = shlex.split(arg)
         if not args:
@@ -97,7 +97,6 @@ class HBNBCommand(cmd.Cmd):
             print([str(obj) for obj in objects.values()
                    if type(obj).__name__ == class_name])
 
-
     def do_update(self, line):
         """Updates an instance based on the class name and id."""
         arg_list = shlex.split(line)
@@ -135,14 +134,12 @@ class HBNBCommand(cmd.Cmd):
         instance.save()
 
     def default(self, line):
-        """Called on an input line when the command prefix is not recognized."""
+        """Called on an input line when the command prefix is not recognized"""
         args = shlex.split(line)
         class_name = args[0]
-        method = args[1] + "_" + class_name
-        if method in self.methods:
-            self.methods[method](args[1])
-        else:
+        if class_name not in HBNBCommand.classes:
             print("*** Unknown syntax: {}".format(line))
+            return
 
     def do_count(self, arg):
         """Retrieves the number of instances of a class"""
@@ -158,6 +155,7 @@ class HBNBCommand(cmd.Cmd):
             if obj.__class__.__name__ == args[0]:
                 count += 1
         print(count)
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
