@@ -4,6 +4,7 @@ from datetime import datetime
 from models.engine.file_storage import FileStorage
 import os.path
 from models import storage
+import models
 
 
 class testBaseModel(unittest.TestCase):
@@ -35,7 +36,7 @@ class testBaseModel(unittest.TestCase):
 
     def test_save(self):
         model = BaseModel()
-        storage.new(model)
+        models.storage.new(model)
         storage.save()
         with open("file.json", "r") as file:
             content = file.read()
