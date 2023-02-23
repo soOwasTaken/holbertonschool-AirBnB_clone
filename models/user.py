@@ -4,7 +4,10 @@ from .base_model import BaseModel
 
 
 class User(BaseModel):
-    """Define the User class"""
+    """
+    Define the User class
+    """
+
     email: str = ""
     password: str = ""
     first_name: str = ""
