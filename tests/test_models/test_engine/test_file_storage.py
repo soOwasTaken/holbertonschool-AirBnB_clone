@@ -26,3 +26,9 @@ class TestFileStorage(unittest.TestCase):
         model = BaseModel()
         FileStorage.new(FileStorage, model)
         self.assertNotEquals(objects[f"{model.__class__.__name__}.{model.id}"], None)
+
+    def test_save(self):
+        model = BaseModel()
+        model.save()
+        self.assertIsNotNone(model.updated_at)
+        self.assertTrue(hasattr(model, 'id'))
