@@ -1,7 +1,5 @@
 import unittest
 import os.path
-import datetime
-import json
 from models.engine.file_storage import FileStorage
 from models.base_model import BaseModel
 from models import storage
@@ -29,11 +27,26 @@ class TestFileStorage(unittest.TestCase):
         FileStorage.new(FileStorage, model)
         self.assertNotEquals(objects[f"{model.__class__.__name__}.{model.id}"], None)
 
-    def save(self):
-        self.updated_at = datetime.utcnow()
-        with open("file.json", mode="r", encoding="utf-8") as file:
-            data = json.load(file)
-        key = "{}.{}".format(self.__class__.__name__, self.id)
-        data[key] = self.to_dict()
-        with open("file.json", mode="w", encoding="utf-8") as file:
-            json.dump(data, file)
+    def test_objects(self):
+        FileStorage._FileStorage__objects = {}
+        objects = FileStorage._FileStorage__objects
+        model = BaseModel()
+        model.save()
+        self.assertEqual(type(objects), dict)
+        os.remove("file.json")
+
+    def test_reload(self):
+        FileStorage._FileStorage__objects = {}
+        objects = FileStorage._FileStorage__objects
+        obj = objects.copy()
+        model = BaseModel()
+        FileStorage.reload(FileStorage)
+        self.assertNotEqual(obj, objects)
+        """ os.remove("file.json") """
+
+    def test_save_storage(self):
+        self.assertEqual(os.path.isfile("file.json"), False)
+        model = BaseModel()
+        FileStorage.save(FileStorage)
+        self.assertEqual(os.path.isfile("file.json"), True)
+        os.remove("file.json")
