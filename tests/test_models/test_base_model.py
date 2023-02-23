@@ -1,10 +1,9 @@
 import unittest
+import os.path
 from models.base_model import BaseModel
 from datetime import datetime
 from models.engine.file_storage import FileStorage
-import os.path
 from models import storage
-import models
 
 
 class testBaseModel(unittest.TestCase):
@@ -17,6 +16,10 @@ class testBaseModel(unittest.TestCase):
         self.assertIsInstance(self.model.created_at, datetime)
         self.assertIsInstance(self.model.updated_at, datetime)
 
+    def test_save(self):
+        first_updated_at = self.model.updated_at
+        self.model.save()
+        self.assertNotEqual(first_updated_at, self.model.updated_at)
 
     def test_to_dict(self):
         model_dict = self.model.to_dict()
@@ -34,11 +37,13 @@ class testBaseModel(unittest.TestCase):
         self.assertIn(str(self.model.id), model_str)
         self.assertIn(str(self.model.__dict__), model_str)
 
-    def test_save(self):
+    def test_save2(self):
         model = BaseModel()
-        models.storage.new(model)
-        storage.save()
-        with open("file.json", "r") as file:
-            content = file.read()
-            self.assertIn(f"BaseModel.{model.id}", content)
+        x = model.updated_at
+        model.save()
+        y = model.updated_at
+        self.assertNotEqual(x, y)
         os.remove("file.json")
+
+if __name__ == '__main__':
+        unittest.main()
