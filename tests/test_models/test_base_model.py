@@ -3,6 +3,7 @@ from models.base_model import BaseModel
 from datetime import datetime
 from models.engine.file_storage import FileStorage
 import os.path
+from models import storage
 
 
 class testBaseModel(unittest.TestCase):
@@ -35,3 +36,12 @@ class testBaseModel(unittest.TestCase):
         self.assertIn('id', model_str)
         self.assertIn(str(self.model.id), model_str)
         self.assertIn(str(self.model.__dict__), model_str)
+
+    def test_save(self):
+        model = BaseModel()
+        storage.new(model)
+        storage.save()
+        with open("file.json", "r") as file:
+            content = file.read()
+            self.assertIn(f"BaseModel.{model.id}", content)
+        os.remove("file.json")
