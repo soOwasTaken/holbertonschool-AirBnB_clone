@@ -5,7 +5,6 @@ from models.base_model import BaseModel
 from models import storage
 
 
-
 class TestFileStorage(unittest.TestCase):
     def test_file_path(self):
         model = BaseModel()
@@ -44,3 +43,17 @@ class TestFileStorage(unittest.TestCase):
         self.assertNotEqual(obj, FileStorage._FileStorage__objects)
         self.assertEqual(os.path.isfile("file.json"), True)
         os.remove("file.json")
+
+    def test_reload(self):
+        model = BaseModel()
+        model.save()
+        file_path = storage._FileStorage__file_path
+        self.assertTrue(os.path.isfile(file_path))
+        storage.reload()
+        key = "{}.{}".format(model.__class__.__name__, model.id)
+        self.assertTrue(key in storage.all().keys())
+        reloaded_model = storage.all()[key]
+        self.assertEqual(model.id, reloaded_model.id)
+        self.assertEqual(model.created_at, reloaded_model.created_at)
+        self.assertEqual(model.updated_at, reloaded_model.updated_at)
+        os.remove(file_path)
