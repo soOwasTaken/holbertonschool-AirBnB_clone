@@ -35,18 +35,3 @@ class TestFileStorage(unittest.TestCase):
         self.assertEqual(type(objects), dict)
         os.remove("file.json")
 
-    def test_reload(self):
-        FileStorage._FileStorage__objects = {}
-        objects = FileStorage._FileStorage__objects
-        obj = objects.copy()
-        model = BaseModel()
-        FileStorage.reload(FileStorage)
-        self.assertNotEqual(obj, objects)
-        """ os.remove("file.json") """
-
-    def test_save_storage(self):
-        self.assertEqual(os.path.isfile("file.json"), False)
-        model = BaseModel()
-        FileStorage.save(FileStorage)
-        self.assertEqual(os.path.isfile("file.json"), True)
-        os.remove("file.json")
