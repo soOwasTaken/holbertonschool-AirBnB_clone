@@ -1,9 +1,11 @@
 import unittest
-import os.path
 from models.base_model import BaseModel
 from datetime import datetime
+import os.path
 from models.engine.file_storage import FileStorage
-from models import storage
+
+
+objects = FileStorage._FileStorage__objects
 
 
 class testBaseModel(unittest.TestCase):
@@ -45,7 +47,7 @@ class testBaseModel(unittest.TestCase):
         self.assertNotEqual(x, y)
         os.remove("file.json")
 
-    def test_save_reload(self):
+    def test_save_with_reload(self):
         self.assertEqual(os.path.isfile("file.json"), False)
         obj = FileStorage._FileStorage__objects.copy()
         model = BaseModel()
@@ -53,6 +55,7 @@ class testBaseModel(unittest.TestCase):
         self.assertNotEqual(obj, FileStorage._FileStorage__objects)
         self.assertEqual(os.path.isfile("file.json"), True)
         os.remove("file.json")
+       
 
-if __name__ == '__main__':
+    if __name__ == '__main__':
         unittest.main()
