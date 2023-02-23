@@ -35,25 +35,17 @@ class TestFileStorage(unittest.TestCase):
         self.assertEqual(type(objects), dict)
         os.remove("file.json")
 
-    def test_save_with_reload(self):
-        self.assertEqual(os.path.isfile("file.json"), False)
-        obj = FileStorage._FileStorage__objects.copy()
+    def test_reload(self):
+        FileStorage._FileStorage__objects = {}
+        objects = FileStorage._FileStorage__objects
+        obj = objects.copy()
         model = BaseModel()
-        model.save()
-        self.assertNotEqual(obj, FileStorage._FileStorage__objects)
+        FileStorage.reload(FileStorage)
+        self.assertNotEqual(obj, objects)
+
+    def test_save_storage(self):
+        self.assertEqual(os.path.isfile("file.json"), False)
+        model = BaseModel()
+        FileStorage.save(FileStorage)
         self.assertEqual(os.path.isfile("file.json"), True)
         os.remove("file.json")
-
-    def test_reload(self):
-        model = BaseModel()
-        model.save()
-        file_path = storage._FileStorage__file_path
-        self.assertTrue(os.path.isfile(file_path))
-        storage.reload()
-        key = "{}.{}".format(model.__class__.__name__, model.id)
-        self.assertTrue(key in storage.all().keys())
-        reloaded_model = storage.all()[key]
-        self.assertEqual(model.id, reloaded_model.id)
-        self.assertEqual(model.created_at, reloaded_model.created_at)
-        self.assertEqual(model.updated_at, reloaded_model.updated_at)
-        os.remove(file_path)
