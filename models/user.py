@@ -8,7 +8,7 @@ class User(BaseModel):
     Define the User class
     """
 
-    email: str = ""
-    password: str = ""
-    first_name: str = ""
-    last_name: str = ""
+    email = str("")
+    password = str("")
+    first_name = str("")
+    last_name = str("")
