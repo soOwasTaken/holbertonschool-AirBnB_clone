@@ -1,10 +1,10 @@
 #!/usr/bin/python3
-""" AirBnB clone - The console"""
-from .base_model import BaseModel
+"""Module that contain the Place class"""
+from models.base_model import BaseModel
 
 
 class Place(BaseModel):
-    """Define the place class"""
+    """Class define Place"""
     city_id = str("")
     user_id = str("")
     name = str("")

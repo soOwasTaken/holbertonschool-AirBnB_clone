@@ -1,9 +1,11 @@
+#!/usr/bin/python3
+"""This module is the base of all the classes"""
 from datetime import datetime
 import uuid
 
 
 class BaseModel:
-    """Defines the attributes and methods for all models."""
+    """This is a classe BaseModel"""
 
     def __init__(self, *args, **kwargs):
         """Initializes a new instance."""
@@ -21,7 +23,7 @@ class BaseModel:
             storage.new(self)
 
     def __str__(self):
-        """Returns a string representation of the instance."""
+        """Returns a string representation of the object."""
         class_name = self.__class__.__name__
         return "[{}] ({}) {}".format(class_name, self.id, self.__dict__)
 
@@ -32,7 +34,7 @@ class BaseModel:
         storage.save()
 
     def to_dict(self):
-        """Returns a dictionary representation of the instance."""
+        """Returns a dictionary representation of the instance keys/values."""
         dictionary = self.__dict__.copy()
         dictionary['__class__'] = self.__class__.__name__
         dictionary['created_at'] = self.created_at.isoformat()

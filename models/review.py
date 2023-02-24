@@ -1,10 +1,10 @@
 #!/usr/bin/python3
-""" AirBnB clone - The console"""
-from .base_model import BaseModel
+"""Module that contain the Review class"""
+from models.base_model import BaseModel
 
 
 class Review(BaseModel):
-    """Define the review class"""
+    """Class define Review"""
     place_id = str("")
     user_id = str("")
     text = str("")

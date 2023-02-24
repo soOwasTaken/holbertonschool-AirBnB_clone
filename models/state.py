@@ -1,8 +1,8 @@
 #!/usr/bin/python3
-""" AirBnB clone - The console"""
-from .base_model import BaseModel
+"""Module that contain the State class"""
+from models.base_model import BaseModel
 
 
 class State(BaseModel):
-    """Define the State class"""
+    """Class define State"""
     name = str("")
