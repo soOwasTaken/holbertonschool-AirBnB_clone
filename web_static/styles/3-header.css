@@ -5,5 +5,7 @@ header {
   border-bottom: 1px solid #cccccc;
   background-image: url(../images/logo.png);
   background-repeat: no-repeat;
-  background-position: 20px center;
+}
+header.logo {
+  margin-left: 20px;
 }
